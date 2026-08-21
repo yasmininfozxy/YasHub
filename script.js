@@ -1,6 +1,1249 @@
-function entrarLinktree() {
-    window.open(
-        "https://linktr.ee/YasHUb",
-        "_blank"
-    );
+
+const defaultData = {
+
+    name: "@Yas",
+
+    bio: "Me encontre nas minhas redes sociais",
+
+    avatar: "",
+
+    socials: [
+
+        {
+            type: "instagram",
+            label: "Instagram",
+            url: "https://www.instagram.com/"
+        },
+
+        {
+            type: "twitch",
+            label: "Twitch",
+            url: "https://www.twitch.tv/"
+        },
+
+        {
+            type: "tiktok",
+            label: "TikTok",
+            url: "https://www.tiktok.com/"
+        },
+
+        {
+            type: "x",
+            label: "X",
+            url: "https://x.com/"
+        }
+
+    ],
+
+
+    links: [
+
+        {
+            title: "YouTube",
+            subtitle: "",
+            url: "https://www.youtube.com/",
+            icon: "https://cdn.simpleicons.org/youtube/FFFFFF",
+            iconClass: "youtube"
+        },
+
+
+        {
+            title: "Discord",
+            subtitle: "Servidor • Free to join",
+            url: "https://discord.com/",
+            icon: "https://cdn.simpleicons.org/discord/FFFFFF",
+            iconClass: "discord"
+        },
+
+
+        {
+            title: "Twitch",
+            subtitle: "",
+            url: "https://www.twitch.tv/",
+            icon: "https://cdn.simpleicons.org/twitch/FFFFFF",
+            iconClass: "twitch"
+        },
+
+
+        {
+            title: "Instagram",
+            subtitle: "",
+            url: "https://www.instagram.com/",
+            icon: "https://cdn.simpleicons.org/instagram/FFFFFF",
+            iconClass: "instagram"
+        },
+
+
+        {
+            title: "TikTok Secundário",
+            subtitle: "",
+            url: "https://www.tiktok.com/",
+            icon: "https://cdn.simpleicons.org/tiktok/FFFFFF",
+            iconClass: "tiktok"
+        },
+
+
+        {
+            title: "TikTok OFICIAL",
+            subtitle: "",
+            url: "https://www.tiktok.com/",
+            icon: "https://cdn.simpleicons.org/tiktok/FFFFFF",
+            iconClass: "tiktok"
+        },
+
+
+        {
+            title: "X",
+            subtitle: "",
+            url: "https://x.com/",
+            icon: "https://cdn.simpleicons.org/x/FFFFFF",
+            iconClass: "x"
+        }
+
+    ]
+
+};
+
+
+/* =========================================================
+   CARREGAR DADOS
+========================================================= */
+
+let data;
+
+try {
+
+    const savedData =
+        localStorage.getItem("my-link-page");
+
+
+    data = savedData
+        ? JSON.parse(savedData)
+        : structuredClone(defaultData);
+
 }
+catch (error) {
+
+    console.warn(
+        "Não foi possível carregar os dados salvos.",
+        error
+    );
+
+    data = structuredClone(defaultData);
+}
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+let editingIndex = null;
+
+let editingProfile = false;
+
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const linksEl =
+    document.getElementById("links");
+
+const socialsEl =
+    document.getElementById("socials");
+
+const nameEl =
+    document.getElementById("profileName");
+
+const bioEl =
+    document.getElementById("profileBio");
+
+const avatarEl =
+    document.querySelector(".avatar");
+
+const avatarImage =
+    document.getElementById("avatarImage");
+
+const avatarPlaceholder =
+    document.getElementById("avatarPlaceholder");
+
+const modalBackdrop =
+    document.getElementById("modalBackdrop");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const modalContent =
+    document.getElementById("modalContent");
+
+const toast =
+    document.getElementById("toast");
+
+
+/* =========================================================
+   SALVAR
+========================================================= */
+
+function saveData() {
+
+    localStorage.setItem(
+        "my-link-page",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+
+function showToast(message) {
+
+    clearTimeout(toastTimer);
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 2200);
+
+}
+
+
+/* =========================================================
+   ESCAPAR HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+
+        .replaceAll("&", "&amp;")
+
+        .replaceAll("<", "&lt;")
+
+        .replaceAll(">", "&gt;")
+
+        .replaceAll('"', "&quot;")
+
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   NORMALIZAR URL
+========================================================= */
+
+function normalizeUrl(url) {
+
+    const value =
+        String(url || "").trim();
+
+
+    if (!value) {
+        return "#";
+    }
+
+
+    if (
+        value.startsWith("http://") ||
+        value.startsWith("https://")
+    ) {
+
+        return value;
+
+    }
+
+
+    return "https://" + value;
+
+}
+
+
+/* =========================================================
+   ÍCONES SOCIAIS
+========================================================= */
+
+function socialIcon(type) {
+
+    const icons = {
+
+        instagram: `
+            <img
+                src="https://cdn.simpleicons.org/instagram/111217"
+                alt=""
+                aria-hidden="true"
+            >
+        `,
+
+
+        twitch: `
+            <img
+                src="https://cdn.simpleicons.org/twitch/111217"
+                alt=""
+                aria-hidden="true"
+            >
+        `,
+
+
+        tiktok: `
+            <img
+                src="https://cdn.simpleicons.org/tiktok/111217"
+                alt=""
+                aria-hidden="true"
+            >
+        `,
+
+
+        x: `
+            <img
+                src="https://cdn.simpleicons.org/x/111217"
+                alt=""
+                aria-hidden="true"
+            >
+        `
+
+    };
+
+
+    return icons[type] || "•";
+
+}
+
+
+/* =========================================================
+   IDENTIFICAR CLASSE DO ÍCONE
+========================================================= */
+
+function getIconClass(title) {
+
+    const value =
+        title
+            .toLowerCase()
+            .trim();
+
+
+    if (value.includes("youtube")) {
+        return "youtube";
+    }
+
+
+    if (value.includes("discord")) {
+        return "discord";
+    }
+
+
+    if (value.includes("twitch")) {
+        return "twitch";
+    }
+
+
+    if (value.includes("instagram")) {
+        return "instagram";
+    }
+
+
+    if (value.includes("tiktok")) {
+        return "tiktok";
+    }
+
+
+    if (
+        value === "x" ||
+        value.includes(" twitter")
+    ) {
+
+        return "x";
+
+    }
+
+
+    return "x";
+
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+function renderAvatar() {
+
+    const avatar =
+        String(data.avatar || "").trim();
+
+
+    if (avatar) {
+
+        avatarImage.src = avatar;
+
+        avatarEl.classList.add("has-image");
+
+    }
+    else {
+
+        avatarImage.removeAttribute("src");
+
+        avatarEl.classList.remove("has-image");
+
+        avatarPlaceholder.textContent = "♡";
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDERIZAR
+========================================================= */
+
+function render() {
+
+    nameEl.textContent =
+        data.name || "@Yas";
+
+
+    bioEl.textContent =
+        data.bio || "";
+
+
+    renderAvatar();
+
+
+    /* -----------------------------------------------------
+       REDES SOCIAIS
+    ----------------------------------------------------- */
+
+    socialsEl.innerHTML =
+        data.socials
+            .map(social => `
+
+                <a
+                    class="social-link"
+                    href="${escapeHtml(
+                        normalizeUrl(social.url)
+                    )}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="${escapeHtml(social.label)}"
+                    aria-label="${escapeHtml(social.label)}"
+                >
+
+                    ${socialIcon(social.type)}
+
+                </a>
+
+            `)
+            .join("");
+
+
+    /* -----------------------------------------------------
+       LINKS
+    ----------------------------------------------------- */
+
+    linksEl.innerHTML =
+
+        data.links
+            .map((link, index) => `
+
+                <article
+                    class="link-card"
+                    data-index="${index}"
+                >
+
+                    <div
+                        class="link-icon ${escapeHtml(
+                            link.iconClass || "x"
+                        )}"
+                    >
+
+                        ${
+                            link.icon
+                                ?
+                                `
+                                    <img
+                                        src="${escapeHtml(link.icon)}"
+                                        alt=""
+                                        loading="lazy"
+                                        onerror="
+                                            this.style.display='none';
+                                            this.nextElementSibling.style.display='block';
+                                        "
+                                    >
+
+                                    <span
+                                        class="icon-fallback"
+                                        style="display:none;"
+                                    >
+                                        ↗
+                                    </span>
+                                `
+                                :
+                                `
+                                    <span class="icon-fallback">
+                                        ↗
+                                    </span>
+                                `
+                        }
+
+                    </div>
+
+
+                    <a
+                        class="link-info"
+                        href="${escapeHtml(
+                            normalizeUrl(link.url)
+                        )}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="${escapeHtml(link.title)}"
+                    >
+
+                        <span class="link-title">
+                            ${escapeHtml(link.title)}
+                        </span>
+
+
+                        ${
+                            link.subtitle
+                                ?
+                                `
+                                    <span class="link-subtitle">
+                                        ${escapeHtml(link.subtitle)}
+                                    </span>
+                                `
+                                :
+                                ""
+                        }
+
+                    </a>
+
+
+                    <button
+                        class="dots"
+                        type="button"
+                        data-edit-index="${index}"
+                        aria-label="Editar ${escapeHtml(link.title)}"
+                        title="Editar link"
+                    >
+                        ⋮
+                    </button>
+
+                </article>
+
+            `)
+            .join("");
+
+
+    /* -----------------------------------------------------
+       BOTÃO ADICIONAR
+    ----------------------------------------------------- */
+
+    linksEl.insertAdjacentHTML(
+        "beforeend",
+
+        `
+            <button
+                class="add-link"
+                id="addLinkBtn"
+                type="button"
+            >
+                + Adicionar novo link
+            </button>
+        `
+    );
+
+
+    /* -----------------------------------------------------
+       BOTÕES DE EDIÇÃO
+    ----------------------------------------------------- */
+
+    document
+        .querySelectorAll("[data-edit-index]")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                event => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    const index =
+                        Number(
+                            button.dataset.editIndex
+                        );
+
+
+                    openLinkEditor(index);
+
+                }
+            );
+
+        });
+
+
+    document
+        .getElementById("addLinkBtn")
+        .addEventListener(
+            "click",
+            addNewLink
+        );
+
+}
+
+
+/* =========================================================
+   EDITAR PERFIL
+========================================================= */
+
+function openProfileEditor() {
+
+    editingProfile = true;
+
+    editingIndex = null;
+
+
+    modalTitle.textContent =
+        "Editar perfil";
+
+
+    modalContent.innerHTML = `
+
+        <div class="field">
+
+            <label for="fName">
+                Nome / @usuário
+            </label>
+
+            <input
+                id="fName"
+                type="text"
+                value="${escapeHtml(data.name)}"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="fBio">
+                Descrição
+            </label>
+
+            <input
+                id="fBio"
+                type="text"
+                value="${escapeHtml(data.bio)}"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="fAvatar">
+                URL da foto de perfil
+            </label>
+
+            <input
+                id="fAvatar"
+                type="url"
+                value="${escapeHtml(data.avatar || "")}"
+                placeholder="https://..."
+                autocomplete="off"
+            >
+
+        </div>
+
+    `;
+
+
+    removeDeleteButton();
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   EDITAR LINK
+========================================================= */
+
+function openLinkEditor(index) {
+
+    editingProfile = false;
+
+    editingIndex = index;
+
+
+    const link =
+        data.links[index];
+
+
+    if (!link) {
+        return;
+    }
+
+
+    modalTitle.textContent =
+        "Editar link";
+
+
+    modalContent.innerHTML = `
+
+        <div class="field">
+
+            <label for="fTitle">
+                Título
+            </label>
+
+            <input
+                id="fTitle"
+                type="text"
+                value="${escapeHtml(link.title)}"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="fSubtitle">
+                Descrição
+            </label>
+
+            <input
+                id="fSubtitle"
+                type="text"
+                value="${escapeHtml(
+                    link.subtitle || ""
+                )}"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="fUrl">
+                URL do link
+            </label>
+
+            <input
+                id="fUrl"
+                type="url"
+                value="${escapeHtml(link.url)}"
+                placeholder="https://..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="fIcon">
+                URL do ícone
+            </label>
+
+            <input
+                id="fIcon"
+                type="url"
+                value="${escapeHtml(
+                    link.icon || ""
+                )}"
+                placeholder="https://..."
+                autocomplete="off"
+            >
+
+        </div>
+
+    `;
+
+
+    addDeleteButton();
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   ADICIONAR LINK
+========================================================= */
+
+function addNewLink() {
+
+    data.links.push({
+
+        title: "Novo link",
+
+        subtitle: "",
+
+        url: "https://",
+
+        icon:
+            "https://cdn.simpleicons.org/link/FFFFFF",
+
+        iconClass: "x"
+
+    });
+
+
+    saveData();
+
+    render();
+
+
+    const newIndex =
+        data.links.length - 1;
+
+
+    openLinkEditor(newIndex);
+
+}
+
+
+/* =========================================================
+   EXCLUIR LINK
+========================================================= */
+
+function deleteCurrentLink() {
+
+    if (editingIndex === null) {
+        return;
+    }
+
+
+    const link =
+        data.links[editingIndex];
+
+
+    if (!link) {
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            `Excluir "${link.title}"?`
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    data.links.splice(
+        editingIndex,
+        1
+    );
+
+
+    saveData();
+
+    closeModal();
+
+    render();
+
+    showToast("Link excluído");
+
+}
+
+
+/* =========================================================
+   BOTÃO EXCLUIR
+========================================================= */
+
+function addDeleteButton() {
+
+    removeDeleteButton();
+
+
+    const actions =
+        document.querySelector(
+            ".modal-actions"
+        );
+
+
+    const deleteButton =
+        document.createElement("button");
+
+
+    deleteButton.type = "button";
+
+    deleteButton.className =
+        "btn danger";
+
+    deleteButton.textContent =
+        "Excluir";
+
+
+    deleteButton.addEventListener(
+        "click",
+        deleteCurrentLink
+    );
+
+
+    actions.prepend(deleteButton);
+
+}
+
+
+function removeDeleteButton() {
+
+    document
+        .querySelector(
+            ".modal-actions .danger"
+        )
+        ?.remove();
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal() {
+
+    modalBackdrop.classList.add("open");
+
+
+    setTimeout(() => {
+
+        modalContent
+            .querySelector("input")
+            ?.focus();
+
+    }, 50);
+
+}
+
+
+function closeModal() {
+
+    modalBackdrop.classList.remove("open");
+
+
+    removeDeleteButton();
+
+
+    editingIndex = null;
+
+    editingProfile = false;
+
+}
+
+
+/* =========================================================
+   SALVAR ALTERAÇÕES
+========================================================= */
+
+function saveChanges() {
+
+
+    /* -----------------------------------------------------
+       PERFIL
+    ----------------------------------------------------- */
+
+    if (editingProfile) {
+
+        const nameInput =
+            document.getElementById("fName");
+
+        const bioInput =
+            document.getElementById("fBio");
+
+        const avatarInput =
+            document.getElementById("fAvatar");
+
+
+        data.name =
+            nameInput.value.trim()
+            || "@Yas";
+
+
+        data.bio =
+            bioInput.value.trim();
+
+
+        data.avatar =
+            avatarInput.value.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       LINK
+    ----------------------------------------------------- */
+
+    else if (editingIndex !== null) {
+
+        const link =
+            data.links[editingIndex];
+
+
+        if (!link) {
+            return;
+        }
+
+
+        const titleInput =
+            document.getElementById("fTitle");
+
+        const subtitleInput =
+            document.getElementById("fSubtitle");
+
+        const urlInput =
+            document.getElementById("fUrl");
+
+        const iconInput =
+            document.getElementById("fIcon");
+
+
+        link.title =
+            titleInput.value.trim()
+            || "Novo link";
+
+
+        link.subtitle =
+            subtitleInput.value.trim();
+
+
+        link.url =
+            normalizeUrl(
+                urlInput.value
+            );
+
+
+        link.icon =
+            iconInput.value.trim();
+
+
+        link.iconClass =
+            getIconClass(
+                link.title
+            );
+
+    }
+
+
+    saveData();
+
+    render();
+
+    closeModal();
+
+    showToast(
+        "Alterações salvas!"
+    );
+
+}
+
+
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+document
+    .getElementById("editProfileBtn")
+    .addEventListener(
+        "click",
+        openProfileEditor
+    );
+
+
+document
+    .getElementById("cancelBtn")
+    .addEventListener(
+        "click",
+        closeModal
+    );
+
+
+document
+    .getElementById("closeModalBtn")
+    .addEventListener(
+        "click",
+        closeModal
+    );
+
+
+document
+    .getElementById("saveBtn")
+    .addEventListener(
+        "click",
+        saveChanges
+    );
+
+
+/* =========================================================
+   FECHAR MODAL AO CLICAR FORA
+========================================================= */
+
+modalBackdrop.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            modalBackdrop
+        ) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            modalBackdrop.classList.contains("open")
+        ) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   COMPARTILHAR
+========================================================= */
+
+document
+    .getElementById("shareBtn")
+    .addEventListener(
+        "click",
+        async () => {
+
+            const shareData = {
+
+                title:
+                    data.name,
+
+                text:
+                    data.bio,
+
+                url:
+                    window.location.href
+
+            };
+
+
+            try {
+
+                /* NAVEGADORES COM SHARE */
+
+                if (navigator.share) {
+
+                    await navigator.share(
+                        shareData
+                    );
+
+                    return;
+
+                }
+
+
+                /* CLIPBOARD */
+
+                if (navigator.clipboard) {
+
+                    await navigator
+                        .clipboard
+                        .writeText(
+                            window.location.href
+                        );
+
+
+                    showToast(
+                        "Link copiado!"
+                    );
+
+
+                    return;
+
+                }
+
+
+                /* FALLBACK */
+
+                const textarea =
+                    document.createElement(
+                        "textarea"
+                    );
+
+
+                textarea.value =
+                    window.location.href;
+
+
+                document.body.appendChild(
+                    textarea
+                );
+
+
+                textarea.select();
+
+
+                document.execCommand(
+                    "copy"
+                );
+
+
+                textarea.remove();
+
+
+                showToast(
+                    "Link copiado!"
+                );
+
+            }
+
+
+            catch (error) {
+
+                console.warn(
+                    "Compartilhamento cancelado.",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+render();
