@@ -27,9 +27,9 @@ const defaultData = {
         },
 
         {
-            type: "x",
-            label: "X",
-            url: "https://x.com/"
+            type: "kick",
+            label: "Kick",
+            url: "https://kick.com/"
         }
 
     ],
@@ -268,13 +268,13 @@ function socialIcon(type) {
         `,
 
 
-        x: `
-            <img
-                src="https://cdn.simpleicons.org/x/111217"
-                alt=""
-                aria-hidden="true"
-            >
-        `
+        kick: `
+           <img
+               src="https://cdn.simpleicons.org/kick/111217"
+               alt=""
+               aria-hidden="true"
+            > 
+        `,
 
     };
 
