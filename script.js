@@ -291,8 +291,8 @@ function getIconClass(title) {
             .trim();
 
 
-    if (value.includes("youtube")) {
-        return "youtube";
+    if (value.includes("kick")) {
+        return "kick";
     }
 
 
