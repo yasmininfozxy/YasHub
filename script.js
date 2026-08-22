@@ -1,7 +1,7 @@
 const defaultData = {
     name: "@Yas",
     bio: "Me encontre nas minhas redes sociais",
-    avatar: "",
+    avatar: "https://pin.it/5we0lrhOy",
 
     socials: [
         {
