@@ -1,3 +1,4 @@
+```css
 :root {
     --pink-bg: #ffcdd4;
     --pink: #f99aaa;
@@ -7,10 +8,13 @@
     --text: #111217;
     --muted: #777b86;
     --border: rgba(0, 0, 0, 0.06);
+
     --shadow:
         0 8px 25px rgba(0, 0, 0, 0.06);
+
     --shadow-hover:
         0 14px 35px rgba(0, 0, 0, 0.12);
+
     --radius: 18px;
 }
 
@@ -61,29 +65,50 @@ button {
 }
 
 
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline:
+        3px solid
+        rgba(233, 120, 141, 0.45);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================
+   PÁGINA
+========================= */
+
 .page {
     width: min(100%, 680px);
     min-height: 100vh;
+
     margin: 0 auto;
+
     padding:
         28px
         24px
         45px;
 }
 
+
+/* =========================
+   TOPO
+========================= */
+
 .topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     margin-bottom: 10px;
 }
 
 
 .topbar-actions {
     display: flex;
-
     align-items: center;
-
     gap: 10px;
 }
 
@@ -92,13 +117,18 @@ button {
 .icon-button {
     width: 46px;
     height: 46px;
+
     border: none;
     border-radius: 50%;
+
     background: var(--white);
     color: var(--text);
+
     display: grid;
     place-items: center;
+
     box-shadow: var(--shadow);
+
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
@@ -130,8 +160,13 @@ button {
 }
 
 
+/* =========================
+   PERFIL
+========================= */
+
 .profile {
     text-align: center;
+
     padding:
         18px
         0
@@ -141,12 +176,16 @@ button {
 
 .avatar {
     position: relative;
+
     width: 126px;
     height: 126px;
+
     margin:
         0 auto
         20px;
+
     border-radius: 50%;
+
     background:
         linear-gradient(
             135deg,
@@ -155,8 +194,10 @@ button {
         );
 
     overflow: hidden;
+
     box-shadow:
         0 8px 25px rgba(0, 0, 0, 0.10);
+
     border:
         4px solid
         rgba(255, 255, 255, 0.75);
@@ -166,7 +207,9 @@ button {
 .avatar img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     display: none;
 }
 
@@ -175,16 +218,21 @@ button {
     display: block;
 }
 
+
 .avatar.has-image .avatar-placeholder {
     display: none;
 }
 
+
 .avatar-placeholder {
     width: 100%;
     height: 100%;
+
     display: grid;
     place-items: center;
+
     color: white;
+
     font-size: 54px;
     font-weight: 900;
 }
@@ -192,11 +240,17 @@ button {
 
 h1 {
     margin: 0;
+
     font-size:
         clamp(27px, 6vw, 38px);
+
     line-height: 1.1;
+
     font-weight: 800;
+
     letter-spacing: -0.7px;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -205,28 +259,45 @@ h1 {
         8px
         auto
         19px;
+
     max-width: 430px;
+
     color: var(--muted);
+
     font-size: 15px;
     line-height: 1.5;
+
+    overflow-wrap: anywhere;
 }
 
 
+/* =========================
+   REDES SOCIAIS
+========================= */
+
 .socials {
     display: flex;
+
     justify-content: center;
     align-items: center;
+
     gap: 22px;
+
+    flex-wrap: wrap;
 }
 
 
 .social-link {
     width: 34px;
     height: 34px;
+
     display: grid;
     place-items: center;
+
     color: #111217;
+
     text-decoration: none;
+
     transition:
         transform 0.2s ease,
         opacity 0.2s ease;
@@ -237,16 +308,24 @@ h1 {
     transform:
         translateY(-3px)
         scale(1.08);
+
     opacity: 0.7;
 }
 
 
-.social-link svg {
+.social-link img {
     width: 29px;
     height: 29px;
+
     display: block;
+
+    object-fit: contain;
 }
 
+
+/* =========================
+   LINKS
+========================= */
 
 .links {
     display: grid;
@@ -256,21 +335,30 @@ h1 {
 
 .link-card {
     position: relative;
+
     min-height: 82px;
+
     display: flex;
     align-items: center;
+
     padding:
         10px
         60px
         10px
         12px;
+
     background: var(--white);
+
     border:
         1px solid
         var(--border);
+
     border-radius: var(--radius);
+
     box-shadow: var(--shadow);
+
     overflow: hidden;
+
     transition:
         transform 0.2s ease,
         box-shadow 0.2s ease;
@@ -279,6 +367,7 @@ h1 {
 
 .link-card:hover {
     transform: translateY(-3px);
+
     box-shadow: var(--shadow-hover);
 }
 
@@ -291,14 +380,20 @@ h1 {
 .link-icon {
     width: 60px;
     height: 60px;
+
     flex:
         0 0
         60px;
+
     margin-right: 15px;
+
     border-radius: 13px;
+
     display: grid;
     place-items: center;
+
     overflow: hidden;
+
     padding: 12px;
 }
 
@@ -306,24 +401,31 @@ h1 {
 .link-icon img {
     width: 100%;
     height: 100%;
+
     object-fit: contain;
+
     display: block;
 }
 
 
-/* Cores dos cartões de ícones */
+/* =========================
+   CORES DOS ÍCONES
+========================= */
 
 .link-icon.kick {
     background: #f99aaa;
 }
 
+
 .link-icon.discord {
     background: #f99aaa;
 }
 
+
 .link-icon.twitch {
     background: #ee92a3;
 }
+
 
 .link-icon.instagram {
     background:
@@ -335,35 +437,59 @@ h1 {
         );
 }
 
+
 .link-icon.tiktok {
     background: #f99aaa;
 }
+
 
 .link-icon.x {
     background: #f99aaa;
 }
 
-.icon-fallback {
-    color: white;
-    font-size: 23px;
-    font-weight: 800;
+
+.link-icon.generic {
+    background: var(--pink);
 }
 
 
+.icon-fallback {
+    color: white;
+
+    font-size: 23px;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+/* =========================
+   TEXTO DOS LINKS
+========================= */
+
 .link-info {
     flex: 1;
+
     min-width: 0;
+
     color: var(--text);
+
     text-decoration: none;
+
     text-align: center;
+
     padding-left: 4px;
+
+    overflow-wrap: anywhere;
 }
 
 
 .link-title {
     display: block;
+
     font-size: 16px;
     font-weight: 700;
+
     line-height: 1.3;
 }
 
@@ -380,52 +506,92 @@ h1 {
     line-height: 1.3;
 }
 
+
+/* =========================
+   BOTÃO DE TRÊS PONTOS
+========================= */
+
 .dots {
     position: absolute;
+
     right: 12px;
     top: 50%;
+
     transform:
         translateY(-50%);
+
     width: 40px;
     height: 40px;
+
     border: none;
     border-radius: 50%;
+
     background: transparent;
+
     color: #777b86;
+
     font-size: 24px;
     line-height: 1;
+
     cursor: pointer;
+
     z-index: 5;
+
     transition:
         background 0.15s ease,
         color 0.15s ease;
 }
 
+
 .dots:hover {
     background:
         rgba(0, 0, 0, 0.06);
+
     color: var(--text);
 }
 
+
+.dots:active {
+    transform:
+        translateY(-50%)
+        scale(0.94);
+}
+
+
+/* =========================
+   ADICIONAR LINK
+========================= */
+
 .add-link {
     width: 100%;
+
     min-height: 56px;
+
     margin-top: 3px;
+
     border:
         2px dashed
         rgba(0, 0, 0, 0.13);
+
     border-radius: 16px;
+
     background:
         rgba(255, 255, 255, 0.2);
+
     color: var(--muted);
+
     cursor: pointer;
+
     font-size: 14px;
     font-weight: 700;
+
     transition:
         background 0.2s ease,
         border-color 0.2s ease,
-        color 0.2s ease;
+        color 0.2s ease,
+        transform 0.2s ease;
 }
+
 
 .add-link:hover {
     background:
@@ -435,12 +601,22 @@ h1 {
         rgba(0, 0, 0, 0.22);
 
     color: var(--text);
+
+    transform: translateY(-1px);
 }
+
+
+/* =========================
+   FOOTER
+========================= */
 
 .footer {
     margin-top: 35px;
+
     text-align: center;
+
     color: var(--muted);
+
     font-size: 13px;
 }
 
@@ -454,15 +630,26 @@ h1 {
     color: var(--pink-dark);
 }
 
+
+/* =========================
+   MODAL
+========================= */
+
 .modal-backdrop {
     position: fixed;
+
     inset: 0;
+
     display: none;
+
     align-items: center;
     justify-content: center;
+
     padding: 20px;
+
     background:
         rgba(0, 0, 0, 0.45);
+
     z-index: 100;
 }
 
@@ -475,22 +662,31 @@ h1 {
 .modal {
     width:
         min(100%, 470px);
+
     max-height: 90vh;
+
     overflow-y: auto;
+
     background: white;
+
     border-radius: 22px;
+
     padding: 24px;
+
     box-shadow:
         0 20px 70px
         rgba(0, 0, 0, 0.25);
+
     animation:
         modalIn 0.18s ease;
 }
+
 
 @keyframes modalIn {
 
     from {
         opacity: 0;
+
         transform:
             translateY(10px)
             scale(0.98);
@@ -498,6 +694,7 @@ h1 {
 
     to {
         opacity: 1;
+
         transform:
             translateY(0)
             scale(1);
@@ -507,8 +704,10 @@ h1 {
 
 .modal-header {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
+
     margin-bottom: 20px;
 }
 
@@ -533,12 +732,26 @@ h1 {
     font-size: 22px;
 
     cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
 }
 
 
 .modal-close:hover {
     background: #e5e6ea;
 }
+
+
+.modal-close:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================
+   CAMPOS
+========================= */
 
 .field {
     margin-bottom: 15px;
@@ -587,6 +800,11 @@ h1 {
         0 0 0 3px
         rgba(249, 154, 170, 0.18);
 }
+
+
+/* =========================
+   BOTÕES DO MODAL
+========================= */
 
 .modal-actions {
     display: flex;
@@ -649,6 +867,16 @@ h1 {
     color: #a40000;
 }
 
+
+.btn.danger:hover {
+    background: #ffd0d0;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
 .toast {
     position: fixed;
 
@@ -700,6 +928,10 @@ h1 {
 }
 
 
+/* =========================
+   RESPONSIVO
+========================= */
+
 @media (max-width: 520px) {
 
     .page {
@@ -723,6 +955,7 @@ h1 {
 
     .link-card {
         min-height: 76px;
+
         padding-right: 54px;
     }
 
@@ -730,8 +963,11 @@ h1 {
     .link-icon {
         width: 54px;
         height: 54px;
+
         flex-basis: 54px;
+
         margin-right: 11px;
+
         padding: 10px;
     }
 
@@ -751,7 +987,7 @@ h1 {
     }
 
 
-    .social-link svg {
+    .social-link img {
         width: 27px;
         height: 27px;
     }
@@ -768,4 +1004,15 @@ h1 {
         padding: 20px;
     }
 
+
+    .modal-actions {
+        flex-wrap: wrap;
+    }
+
+
+    .btn.danger {
+        margin-right: auto;
+    }
+
 }
+```
