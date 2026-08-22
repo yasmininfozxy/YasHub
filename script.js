@@ -12,7 +12,7 @@ const defaultData = {
         {
             type: "twitch",
             label: "Twitch",
-            url: "https://www.twitch.tv/"
+            url: "https://www.twitch.tv/eimonttel"
         },
         {
             type: "tiktok",
@@ -22,7 +22,7 @@ const defaultData = {
         {
             type: "kick",
             label: "Kick",
-            url: "https://kick.com/"
+            url: "https://kick.com/eimonttel"
         }
     ],
 
