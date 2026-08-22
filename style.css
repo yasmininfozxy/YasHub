@@ -1,4 +1,3 @@
-```css
 :root {
     --pink-bg: #ffcdd4;
     --pink: #f99aaa;
@@ -8,16 +7,10 @@
     --text: #111217;
     --muted: #777b86;
     --border: rgba(0, 0, 0, 0.06);
-
-    --shadow:
-        0 8px 25px rgba(0, 0, 0, 0.06);
-
-    --shadow-hover:
-        0 14px 35px rgba(0, 0, 0, 0.12);
-
+    --shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 14px 35px rgba(0, 0, 0, 0.12);
     --radius: 18px;
 }
-
 
 * {
     margin: 0;
@@ -25,86 +18,45 @@
     box-sizing: border-box;
 }
 
-
 html {
     scroll-behavior: smooth;
 }
 
-
 body {
     min-height: 100vh;
-
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family: Inter, Arial, Helvetica, sans-serif;
     color: var(--text);
-
-    background:
-        linear-gradient(
-            180deg,
-            #ffcdd4 0%,
-            #ffd9df 45%,
-            #ffcdd4 100%
-        );
-
+    background: linear-gradient(
+        180deg,
+        #ffcdd4 0%,
+        #ffd9df 45%,
+        #ffcdd4 100%
+    );
     -webkit-font-smoothing: antialiased;
 }
-
 
 button,
 input {
     font: inherit;
 }
 
-
 button {
     -webkit-tap-highlight-color: transparent;
 }
 
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible {
-    outline:
-        3px solid
-        rgba(233, 120, 141, 0.45);
-
-    outline-offset: 3px;
-}
-
-
-/* =========================
-   PÁGINA
-========================= */
-
 .page {
     width: min(100%, 680px);
     min-height: 100vh;
-
     margin: 0 auto;
-
-    padding:
-        28px
-        24px
-        45px;
+    padding: 28px 24px 45px;
 }
-
-
-/* =========================
-   TOPO
-========================= */
 
 .topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 10px;
 }
-
 
 .topbar-actions {
     display: flex;
@@ -112,28 +64,19 @@ input:focus-visible {
     gap: 10px;
 }
 
-
 .brand,
 .icon-button {
     width: 46px;
     height: 46px;
-
     border: none;
     border-radius: 50%;
-
     background: var(--white);
     color: var(--text);
-
     display: grid;
     place-items: center;
-
     box-shadow: var(--shadow);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 
 .brand {
     font-size: 23px;
@@ -141,12 +84,10 @@ input:focus-visible {
     color: var(--pink-dark);
 }
 
-
 .icon-button {
     cursor: pointer;
     font-size: 21px;
 }
-
 
 .brand:hover,
 .icon-button:hover {
@@ -154,844 +95,445 @@ input:focus-visible {
     box-shadow: var(--shadow-hover);
 }
 
-
 .icon-button:active {
     transform: scale(0.95);
 }
 
-
-/* =========================
-   PERFIL
-========================= */
-
 .profile {
     text-align: center;
-
-    padding:
-        18px
-        0
-        30px;
+    padding: 18px 0 30px;
 }
-
 
 .avatar {
     position: relative;
-
     width: 126px;
     height: 126px;
-
-    margin:
-        0 auto
-        20px;
-
+    margin: 0 auto 20px;
     border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #f99aaa,
-            #fbc1ca
-        );
-
+    background: linear-gradient(135deg, #f99aaa, #fbc1ca);
     overflow: hidden;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.10);
-
-    border:
-        4px solid
-        rgba(255, 255, 255, 0.75);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.10);
+    border: 4px solid rgba(255, 255, 255, 0.75);
 }
-
 
 .avatar img {
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     display: none;
 }
-
 
 .avatar.has-image img {
     display: block;
 }
 
-
 .avatar.has-image .avatar-placeholder {
     display: none;
 }
 
-
 .avatar-placeholder {
     width: 100%;
     height: 100%;
-
     display: grid;
     place-items: center;
-
     color: white;
-
     font-size: 54px;
     font-weight: 900;
 }
 
-
 h1 {
     margin: 0;
-
-    font-size:
-        clamp(27px, 6vw, 38px);
-
+    font-size: clamp(27px, 6vw, 38px);
     line-height: 1.1;
-
     font-weight: 800;
-
     letter-spacing: -0.7px;
-
-    overflow-wrap: anywhere;
 }
-
 
 .profile-bio {
-    margin:
-        8px
-        auto
-        19px;
-
+    margin: 8px auto 19px;
     max-width: 430px;
-
     color: var(--muted);
-
     font-size: 15px;
     line-height: 1.5;
-
-    overflow-wrap: anywhere;
 }
-
-
-/* =========================
-   REDES SOCIAIS
-========================= */
 
 .socials {
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     gap: 22px;
-
-    flex-wrap: wrap;
 }
-
 
 .social-link {
     width: 34px;
     height: 34px;
-
     display: grid;
     place-items: center;
-
     color: #111217;
-
     text-decoration: none;
-
-    transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
-
 
 .social-link:hover {
-    transform:
-        translateY(-3px)
-        scale(1.08);
-
+    transform: translateY(-3px) scale(1.08);
     opacity: 0.7;
 }
-
 
 .social-link img {
     width: 29px;
     height: 29px;
-
     display: block;
-
-    object-fit: contain;
 }
-
-
-/* =========================
-   LINKS
-========================= */
 
 .links {
     display: grid;
     gap: 14px;
 }
 
-
 .link-card {
     position: relative;
-
     min-height: 82px;
-
     display: flex;
     align-items: center;
-
-    padding:
-        10px
-        60px
-        10px
-        12px;
-
+    padding: 10px 60px 10px 12px;
     background: var(--white);
-
-    border:
-        1px solid
-        var(--border);
-
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-
     box-shadow: var(--shadow);
-
     overflow: hidden;
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
 
 .link-card:hover {
     transform: translateY(-3px);
-
     box-shadow: var(--shadow-hover);
 }
-
 
 .link-card:active {
     transform: scale(0.985);
 }
 
-
 .link-icon {
     width: 60px;
     height: 60px;
-
-    flex:
-        0 0
-        60px;
-
+    flex: 0 0 60px;
     margin-right: 15px;
-
     border-radius: 13px;
-
     display: grid;
     place-items: center;
-
     overflow: hidden;
-
     padding: 12px;
 }
-
 
 .link-icon img {
     width: 100%;
     height: 100%;
-
     object-fit: contain;
-
     display: block;
 }
 
-
-/* =========================
-   CORES DOS ÍCONES
-========================= */
-
-.link-icon.kick {
-    background: #f99aaa;
-}
-
-
-.link-icon.discord {
-    background: #f99aaa;
-}
-
-
-.link-icon.twitch {
-    background: #ee92a3;
-}
-
-
-.link-icon.instagram {
-    background:
-        linear-gradient(
-            135deg,
-            #ffb6c1,
-            #f99aaa,
-            #e9788d
-        );
-}
-
-
-.link-icon.tiktok {
-    background: #f99aaa;
-}
-
-
+.link-icon.kick,
+.link-icon.discord,
+.link-icon.twitch,
+.link-icon.tiktok,
 .link-icon.x {
     background: #f99aaa;
 }
 
-
-.link-icon.generic {
-    background: var(--pink);
+.link-icon.instagram {
+    background: linear-gradient(
+        135deg,
+        #ffb6c1,
+        #f99aaa,
+        #e9788d
+    );
 }
-
 
 .icon-fallback {
     color: white;
-
     font-size: 23px;
     font-weight: 800;
-
-    line-height: 1;
 }
-
-
-/* =========================
-   TEXTO DOS LINKS
-========================= */
 
 .link-info {
     flex: 1;
-
     min-width: 0;
-
     color: var(--text);
-
     text-decoration: none;
-
     text-align: center;
-
     padding-left: 4px;
-
-    overflow-wrap: anywhere;
 }
-
 
 .link-title {
     display: block;
-
     font-size: 16px;
     font-weight: 700;
-
     line-height: 1.3;
 }
-
 
 .link-subtitle {
     display: block;
-
     margin-top: 4px;
-
     color: var(--muted);
-
     font-size: 13px;
-
     line-height: 1.3;
 }
 
-
-/* =========================
-   BOTÃO DE TRÊS PONTOS
-========================= */
-
 .dots {
     position: absolute;
-
     right: 12px;
     top: 50%;
-
-    transform:
-        translateY(-50%);
-
+    transform: translateY(-50%);
     width: 40px;
     height: 40px;
-
     border: none;
     border-radius: 50%;
-
     background: transparent;
-
     color: #777b86;
-
     font-size: 24px;
     line-height: 1;
-
     cursor: pointer;
-
     z-index: 5;
-
-    transition:
-        background 0.15s ease,
-        color 0.15s ease;
+    transition: background 0.15s ease, color 0.15s ease;
 }
-
 
 .dots:hover {
-    background:
-        rgba(0, 0, 0, 0.06);
-
+    background: rgba(0, 0, 0, 0.06);
     color: var(--text);
 }
-
-
-.dots:active {
-    transform:
-        translateY(-50%)
-        scale(0.94);
-}
-
-
-/* =========================
-   ADICIONAR LINK
-========================= */
 
 .add-link {
     width: 100%;
-
     min-height: 56px;
-
     margin-top: 3px;
-
-    border:
-        2px dashed
-        rgba(0, 0, 0, 0.13);
-
+    border: 2px dashed rgba(0, 0, 0, 0.13);
     border-radius: 16px;
-
-    background:
-        rgba(255, 255, 255, 0.2);
-
+    background: rgba(255, 255, 255, 0.2);
     color: var(--muted);
-
     cursor: pointer;
-
     font-size: 14px;
     font-weight: 700;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
-
 
 .add-link:hover {
-    background:
-        rgba(255, 255, 255, 0.55);
-
-    border-color:
-        rgba(0, 0, 0, 0.22);
-
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(0, 0, 0, 0.22);
     color: var(--text);
-
-    transform: translateY(-1px);
 }
-
-
-/* =========================
-   FOOTER
-========================= */
 
 .footer {
     margin-top: 35px;
-
     text-align: center;
-
     color: var(--muted);
-
     font-size: 13px;
 }
-
 
 .footer strong {
     color: var(--text);
 }
 
-
 .footer span {
     color: var(--pink-dark);
 }
 
-
-/* =========================
-   MODAL
-========================= */
-
 .modal-backdrop {
     position: fixed;
-
     inset: 0;
-
     display: none;
-
     align-items: center;
     justify-content: center;
-
     padding: 20px;
-
-    background:
-        rgba(0, 0, 0, 0.45);
-
+    background: rgba(0, 0, 0, 0.45);
     z-index: 100;
 }
-
 
 .modal-backdrop.open {
     display: flex;
 }
 
-
 .modal {
-    width:
-        min(100%, 470px);
-
+    width: min(100%, 470px);
     max-height: 90vh;
-
     overflow-y: auto;
-
     background: white;
-
     border-radius: 22px;
-
     padding: 24px;
-
-    box-shadow:
-        0 20px 70px
-        rgba(0, 0, 0, 0.25);
-
-    animation:
-        modalIn 0.18s ease;
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.25);
+    animation: modalIn 0.18s ease;
 }
 
-
 @keyframes modalIn {
-
     from {
         opacity: 0;
-
-        transform:
-            translateY(10px)
-            scale(0.98);
+        transform: translateY(10px) scale(0.98);
     }
 
     to {
         opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
+        transform: translateY(0) scale(1);
     }
 }
 
-
 .modal-header {
     display: flex;
-
     align-items: center;
     justify-content: space-between;
-
     margin-bottom: 20px;
 }
-
 
 .modal-header h2 {
     font-size: 21px;
 }
 
-
 .modal-close {
     width: 34px;
     height: 34px;
-
     border: none;
-
     border-radius: 50%;
-
     background: #f1f2f5;
-
     color: var(--text);
-
     font-size: 22px;
-
     cursor: pointer;
-
-    transition:
-        background 0.15s ease,
-        transform 0.15s ease;
 }
-
 
 .modal-close:hover {
     background: #e5e6ea;
 }
 
-
-.modal-close:active {
-    transform: scale(0.94);
-}
-
-
-/* =========================
-   CAMPOS
-========================= */
-
 .field {
     margin-bottom: 15px;
 }
 
-
 .field label {
     display: block;
-
     margin-bottom: 7px;
-
     font-size: 13px;
-
     font-weight: 700;
 }
-
 
 .field input {
     width: 100%;
-
     padding: 12px;
-
-    border:
-        1px solid
-        #d8dbe2;
-
+    border: 1px solid #d8dbe2;
     border-radius: 11px;
-
     outline: none;
-
     background: white;
-
     color: var(--text);
-
-    transition:
-        border-color 0.15s ease,
-        box-shadow 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-
 
 .field input:focus {
-    border-color:
-        var(--pink-dark);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(249, 154, 170, 0.18);
+    border-color: var(--pink-dark);
+    box-shadow: 0 0 0 3px rgba(249, 154, 170, 0.18);
 }
-
-
-/* =========================
-   BOTÕES DO MODAL
-========================= */
 
 .modal-actions {
     display: flex;
-
     align-items: center;
-
     justify-content: flex-end;
-
     gap: 10px;
-
     margin-top: 22px;
 }
 
-
 .btn {
     border: none;
-
     border-radius: 11px;
-
-    padding:
-        11px
-        16px;
-
+    padding: 11px 16px;
     cursor: pointer;
-
     font-weight: 700;
-
-    transition:
-        opacity 0.15s ease,
-        transform 0.15s ease;
+    transition: opacity 0.15s ease, transform 0.15s ease;
 }
-
 
 .btn:hover {
     opacity: 0.85;
-
     transform: translateY(-1px);
 }
 
-
 .btn.secondary {
     background: #eceef2;
-
     color: var(--text);
 }
 
-
 .btn.primary {
     background: var(--pink-dark);
-
     color: white;
 }
-
 
 .btn.danger {
     margin-right: auto;
-
     background: #ffe1e1;
-
     color: #a40000;
 }
 
-
-.btn.danger:hover {
-    background: #ffd0d0;
-}
-
-
-/* =========================
-   TOAST
-========================= */
-
 .toast {
     position: fixed;
-
     left: 50%;
     bottom: 25px;
-
-    transform:
-        translateX(-50%)
-        translateY(20px);
-
-    max-width:
-        calc(100% - 30px);
-
-    padding:
-        11px
-        17px;
-
+    transform: translateX(-50%) translateY(20px);
+    max-width: calc(100% - 30px);
+    padding: 11px 17px;
     border-radius: 999px;
-
     background: #111217;
-
     color: white;
-
     font-size: 14px;
-
     white-space: nowrap;
-
     overflow: hidden;
-
     text-overflow: ellipsis;
-
     opacity: 0;
-
     pointer-events: none;
-
     z-index: 200;
-
-    transition:
-        0.25s ease;
+    transition: 0.25s ease;
 }
-
 
 .toast.show {
     opacity: 1;
-
-    transform:
-        translateX(-50%)
-        translateY(0);
+    transform: translateX(-50%) translateY(0);
 }
 
-
-/* =========================
-   RESPONSIVO
-========================= */
-
 @media (max-width: 520px) {
-
     .page {
-        padding:
-            20px
-            16px
-            35px;
+        padding: 20px 16px 35px;
     }
-
 
     .avatar {
         width: 115px;
         height: 115px;
     }
 
-
     .avatar-placeholder {
         font-size: 48px;
     }
 
-
     .link-card {
         min-height: 76px;
-
         padding-right: 54px;
     }
-
 
     .link-icon {
         width: 54px;
         height: 54px;
-
         flex-basis: 54px;
-
         margin-right: 11px;
-
         padding: 10px;
     }
-
 
     .link-title {
         font-size: 15px;
     }
 
-
     .link-subtitle {
         font-size: 12px;
     }
-
 
     .socials {
         gap: 18px;
     }
 
-
     .social-link img {
         width: 27px;
         height: 27px;
     }
-
 
     .brand,
     .icon-button {
@@ -999,20 +541,7 @@ h1 {
         height: 43px;
     }
 
-
     .modal {
         padding: 20px;
     }
-
-
-    .modal-actions {
-        flex-wrap: wrap;
-    }
-
-
-    .btn.danger {
-        margin-right: auto;
-    }
-
 }
-```
