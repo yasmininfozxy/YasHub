@@ -1,4 +1,3 @@
-
 const defaultData = {
 
     name: "@Yas",
@@ -105,10 +104,6 @@ const defaultData = {
 };
 
 
-/* =========================================================
-   CARREGAR DADOS
-========================================================= */
-
 let data;
 
 try {
@@ -133,18 +128,9 @@ catch (error) {
 }
 
 
-/* =========================================================
-   ESTADO
-========================================================= */
-
 let editingIndex = null;
 
 let editingProfile = false;
-
-
-/* =========================================================
-   ELEMENTOS
-========================================================= */
 
 const linksEl =
     document.getElementById("links");
@@ -180,10 +166,6 @@ const toast =
     document.getElementById("toast");
 
 
-/* =========================================================
-   SALVAR
-========================================================= */
-
 function saveData() {
 
     localStorage.setItem(
@@ -192,11 +174,6 @@ function saveData() {
     );
 
 }
-
-
-/* =========================================================
-   TOAST
-========================================================= */
 
 let toastTimer;
 
@@ -219,11 +196,6 @@ function showToast(message) {
 
 }
 
-
-/* =========================================================
-   ESCAPAR HTML
-========================================================= */
-
 function escapeHtml(value) {
 
     return String(value)
@@ -239,11 +211,6 @@ function escapeHtml(value) {
         .replaceAll("'", "&#039;");
 
 }
-
-
-/* =========================================================
-   NORMALIZAR URL
-========================================================= */
 
 function normalizeUrl(url) {
 
@@ -269,11 +236,6 @@ function normalizeUrl(url) {
     return "https://" + value;
 
 }
-
-
-/* =========================================================
-   ÍCONES SOCIAIS
-========================================================= */
 
 function socialIcon(type) {
 
@@ -320,11 +282,6 @@ function socialIcon(type) {
     return icons[type] || "•";
 
 }
-
-
-/* =========================================================
-   IDENTIFICAR CLASSE DO ÍCONE
-========================================================= */
 
 function getIconClass(title) {
 
@@ -373,11 +330,6 @@ function getIconClass(title) {
 
 }
 
-
-/* =========================================================
-   AVATAR
-========================================================= */
-
 function renderAvatar() {
 
     const avatar =
@@ -403,11 +355,6 @@ function renderAvatar() {
 
 }
 
-
-/* =========================================================
-   RENDERIZAR
-========================================================= */
-
 function render() {
 
     nameEl.textContent =
@@ -419,11 +366,6 @@ function render() {
 
 
     renderAvatar();
-
-
-    /* -----------------------------------------------------
-       REDES SOCIAIS
-    ----------------------------------------------------- */
 
     socialsEl.innerHTML =
         data.socials
@@ -446,11 +388,6 @@ function render() {
 
             `)
             .join("");
-
-
-    /* -----------------------------------------------------
-       LINKS
-    ----------------------------------------------------- */
 
     linksEl.innerHTML =
 
@@ -545,11 +482,6 @@ function render() {
             `)
             .join("");
 
-
-    /* -----------------------------------------------------
-       BOTÃO ADICIONAR
-    ----------------------------------------------------- */
-
     linksEl.insertAdjacentHTML(
         "beforeend",
 
@@ -563,11 +495,6 @@ function render() {
             </button>
         `
     );
-
-
-    /* -----------------------------------------------------
-       BOTÕES DE EDIÇÃO
-    ----------------------------------------------------- */
 
     document
         .querySelectorAll("[data-edit-index]")
@@ -604,11 +531,6 @@ function render() {
         );
 
 }
-
-
-/* =========================================================
-   EDITAR PERFIL
-========================================================= */
 
 function openProfileEditor() {
 
@@ -679,11 +601,6 @@ function openProfileEditor() {
     openModal();
 
 }
-
-
-/* =========================================================
-   EDITAR LINK
-========================================================= */
 
 function openLinkEditor(index) {
 
@@ -786,10 +703,6 @@ function openLinkEditor(index) {
 }
 
 
-/* =========================================================
-   ADICIONAR LINK
-========================================================= */
-
 function addNewLink() {
 
     data.links.push({
@@ -820,11 +733,6 @@ function addNewLink() {
     openLinkEditor(newIndex);
 
 }
-
-
-/* =========================================================
-   EXCLUIR LINK
-========================================================= */
 
 function deleteCurrentLink() {
 
@@ -869,10 +777,6 @@ function deleteCurrentLink() {
 
 }
 
-
-/* =========================================================
-   BOTÃO EXCLUIR
-========================================================= */
 
 function addDeleteButton() {
 
@@ -919,11 +823,6 @@ function removeDeleteButton() {
 
 }
 
-
-/* =========================================================
-   MODAL
-========================================================= */
-
 function openModal() {
 
     modalBackdrop.classList.add("open");
@@ -954,17 +853,7 @@ function closeModal() {
 
 }
 
-
-/* =========================================================
-   SALVAR ALTERAÇÕES
-========================================================= */
-
 function saveChanges() {
-
-
-    /* -----------------------------------------------------
-       PERFIL
-    ----------------------------------------------------- */
 
     if (editingProfile) {
 
@@ -991,11 +880,6 @@ function saveChanges() {
             avatarInput.value.trim();
 
     }
-
-
-    /* -----------------------------------------------------
-       LINK
-    ----------------------------------------------------- */
 
     else if (editingIndex !== null) {
 
@@ -1060,11 +944,6 @@ function saveChanges() {
 
 }
 
-
-/* =========================================================
-   EVENTOS
-========================================================= */
-
 document
     .getElementById("editProfileBtn")
     .addEventListener(
@@ -1097,10 +976,6 @@ document
     );
 
 
-/* =========================================================
-   FECHAR MODAL AO CLICAR FORA
-========================================================= */
-
 modalBackdrop.addEventListener(
     "click",
     event => {
@@ -1118,10 +993,6 @@ modalBackdrop.addEventListener(
 );
 
 
-/* =========================================================
-   ESC
-========================================================= */
-
 document.addEventListener(
     "keydown",
     event => {
@@ -1137,11 +1008,6 @@ document.addEventListener(
 
     }
 );
-
-
-/* =========================================================
-   COMPARTILHAR
-========================================================= */
 
 document
     .getElementById("shareBtn")
@@ -1165,8 +1031,6 @@ document
 
             try {
 
-                /* NAVEGADORES COM SHARE */
-
                 if (navigator.share) {
 
                     await navigator.share(
@@ -1176,9 +1040,6 @@ document
                     return;
 
                 }
-
-
-                /* CLIPBOARD */
 
                 if (navigator.clipboard) {
 
