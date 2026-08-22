@@ -30,7 +30,7 @@ const defaultData = {
         {
             title: "Kick",
             subtitle: "",
-            url: "https://kick.com/",
+            url: "https://kick.com/eimonttel",
             icon: "https://cdn.simpleicons.org/kick/FFFFFF",
             iconClass: "kick"
         },
@@ -51,7 +51,7 @@ const defaultData = {
         {
             title: "Instagram",
             subtitle: "",
-            url: "https://www.instagram.com/",
+            url: "https://www.instagram.com/eimonttel?igsi=dmt1cnZqNWk3Z3Nj",
             icon: "https://cdn.simpleicons.org/instagram/FFFFFF",
             iconClass: "instagram"
         },
