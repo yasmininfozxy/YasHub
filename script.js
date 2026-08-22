@@ -1,3 +1,8 @@
+```javascript
+/* =========================================================
+   DADOS PADRÃO
+========================================================= */
+
 const defaultData = {
 
     name: "@Yas",
@@ -37,14 +42,13 @@ const defaultData = {
 
     links: [
 
-         {
+        {
             title: "Kick",
             subtitle: "",
             url: "https://kick.com/",
             icon: "https://cdn.simpleicons.org/kick/FFFFFF",
             iconClass: "kick"
         },
-
 
         {
             title: "Discord",
@@ -54,7 +58,6 @@ const defaultData = {
             iconClass: "discord"
         },
 
-
         {
             title: "Twitch",
             subtitle: "",
@@ -62,7 +65,6 @@ const defaultData = {
             icon: "https://cdn.simpleicons.org/twitch/FFFFFF",
             iconClass: "twitch"
         },
-
 
         {
             title: "Instagram",
@@ -72,7 +74,6 @@ const defaultData = {
             iconClass: "instagram"
         },
 
-
         {
             title: "TikTok Secundário",
             subtitle: "",
@@ -81,7 +82,6 @@ const defaultData = {
             iconClass: "tiktok"
         },
 
-
         {
             title: "TikTok OFICIAL",
             subtitle: "",
@@ -89,7 +89,6 @@ const defaultData = {
             icon: "https://cdn.simpleicons.org/tiktok/FFFFFF",
             iconClass: "tiktok"
         },
-
 
         {
             title: "X",
@@ -104,6 +103,124 @@ const defaultData = {
 };
 
 
+/* =========================================================
+   FUNÇÕES DE SEGURANÇA DOS DADOS
+========================================================= */
+
+function cloneDefaultData() {
+
+    return JSON.parse(
+        JSON.stringify(defaultData)
+    );
+
+}
+
+
+function normalizeData(saved) {
+
+    const base = cloneDefaultData();
+
+    if (!saved || typeof saved !== "object") {
+        return base;
+    }
+
+
+    return {
+
+        ...base,
+
+        name:
+            typeof saved.name === "string"
+                ? saved.name
+                : base.name,
+
+        bio:
+            typeof saved.bio === "string"
+                ? saved.bio
+                : base.bio,
+
+        avatar:
+            typeof saved.avatar === "string"
+                ? saved.avatar
+                : base.avatar,
+
+        socials:
+            Array.isArray(saved.socials)
+                ? saved.socials
+                    .filter(
+                        social =>
+                            social &&
+                            typeof social === "object"
+                    )
+                    .map(social => ({
+                        type:
+                            String(
+                                social.type || ""
+                            ).toLowerCase(),
+
+                        label:
+                            String(
+                                social.label || "Rede social"
+                            ),
+
+                        url:
+                            String(
+                                social.url || ""
+                            )
+                    }))
+                : base.socials,
+
+        links:
+            Array.isArray(saved.links)
+                ? saved.links
+                    .filter(
+                        link =>
+                            link &&
+                            typeof link === "object"
+                    )
+                    .map(link => {
+
+                        const title =
+                            String(
+                                link.title || "Novo link"
+                            );
+
+                        return {
+
+                            title,
+
+                            subtitle:
+                                String(
+                                    link.subtitle || ""
+                                ),
+
+                            url:
+                                String(
+                                    link.url || ""
+                                ),
+
+                            icon:
+                                String(
+                                    link.icon || ""
+                                ),
+
+                            iconClass:
+                                getIconClass(title)
+
+                        };
+
+                    })
+                : base.links
+
+    };
+
+}
+
+
+/* =========================================================
+   CARREGAMENTO
+========================================================= */
+
 let data;
 
 try {
@@ -112,9 +229,21 @@ try {
         localStorage.getItem("my-link-page");
 
 
-    data = savedData
-        ? JSON.parse(savedData)
-        : structuredClone(defaultData);
+    if (savedData) {
+
+        const parsed =
+            JSON.parse(savedData);
+
+        data =
+            normalizeData(parsed);
+
+    }
+    else {
+
+        data =
+            cloneDefaultData();
+
+    }
 
 }
 catch (error) {
@@ -124,13 +253,26 @@ catch (error) {
         error
     );
 
-    data = structuredClone(defaultData);
+    data =
+        cloneDefaultData();
+
 }
 
+
+/* =========================================================
+   ESTADO
+========================================================= */
 
 let editingIndex = null;
 
 let editingProfile = false;
+
+let toastTimer;
+
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
 
 const linksEl =
     document.getElementById("links");
@@ -166,23 +308,46 @@ const toast =
     document.getElementById("toast");
 
 
+/* =========================================================
+   SALVAR
+========================================================= */
+
 function saveData() {
 
-    localStorage.setItem(
-        "my-link-page",
-        JSON.stringify(data)
-    );
+    try {
+
+        localStorage.setItem(
+            "my-link-page",
+            JSON.stringify(data)
+        );
+
+    }
+    catch (error) {
+
+        console.warn(
+            "Não foi possível salvar os dados.",
+            error
+        );
+
+        showToast(
+            "Não foi possível salvar as alterações."
+        );
+
+    }
 
 }
 
-let toastTimer;
 
+/* =========================================================
+   TOAST
+========================================================= */
 
 function showToast(message) {
 
     clearTimeout(toastTimer);
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
     toast.classList.add("show");
 
@@ -196,9 +361,14 @@ function showToast(message) {
 
 }
 
+
+/* =========================================================
+   SEGURANÇA HTML
+========================================================= */
+
 function escapeHtml(value) {
 
-    return String(value)
+    return String(value ?? "")
 
         .replaceAll("&", "&amp;")
 
@@ -212,6 +382,11 @@ function escapeHtml(value) {
 
 }
 
+
+/* =========================================================
+   URL
+========================================================= */
+
 function normalizeUrl(url) {
 
     const value =
@@ -224,11 +399,20 @@ function normalizeUrl(url) {
 
 
     if (
-        value.startsWith("http://") ||
-        value.startsWith("https://")
+        value.startsWith("https://") ||
+        value.startsWith("http://")
     ) {
 
         return value;
+
+    }
+
+
+    if (
+        value.startsWith("//")
+    ) {
+
+        return "https:" + value;
 
     }
 
@@ -237,88 +421,135 @@ function normalizeUrl(url) {
 
 }
 
+
+/* =========================================================
+   ÍCONES
+========================================================= */
+
+const iconUrls = {
+
+    instagram:
+        "https://cdn.simpleicons.org/instagram/111217",
+
+    twitch:
+        "https://cdn.simpleicons.org/twitch/111217",
+
+    tiktok:
+        "https://cdn.simpleicons.org/tiktok/111217",
+
+    kick:
+        "https://cdn.simpleicons.org/kick/111217",
+
+    discord:
+        "https://cdn.simpleicons.org/discord/111217",
+
+    x:
+        "https://cdn.simpleicons.org/x/111217"
+
+};
+
+
 function socialIcon(type) {
 
-    const icons = {
-
-        instagram: `
-            <img
-                src="https://cdn.simpleicons.org/instagram/111217"
-                alt=""
-                aria-hidden="true"
-            >
-        `,
-
-
-        twitch: `
-            <img
-                src="https://cdn.simpleicons.org/twitch/111217"
-                alt=""
-                aria-hidden="true"
-            >
-        `,
-
-
-        tiktok: `
-            <img
-                src="https://cdn.simpleicons.org/tiktok/111217"
-                alt=""
-                aria-hidden="true"
-            >
-        `,
-
-
-        kick: `
-           <img
-               src="https://cdn.simpleicons.org/kick/111217"
-               alt=""
-               aria-hidden="true"
-            > 
-        `,
-
-    };
-
-
-    return icons[type] || "•";
-
-}
-
-function getIconClass(title) {
-
-    const value =
-        title
+    const normalizedType =
+        String(type || "")
             .toLowerCase()
             .trim();
 
 
-    if (value.includes("kick")) {
+    const icon =
+        iconUrls[normalizedType];
+
+
+    if (!icon) {
+
+        return `
+            <span
+                class="icon-fallback"
+                aria-hidden="true"
+            >
+                •
+            </span>
+        `;
+
+    }
+
+
+    return `
+        <img
+            src="${icon}"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            onerror="this.style.display='none';"
+        >
+    `;
+
+}
+
+
+/* =========================================================
+   IDENTIFICAÇÃO DO ÍCONE DO LINK
+========================================================= */
+
+function getIconClass(title) {
+
+    const value =
+        String(title || "")
+            .toLowerCase()
+            .trim();
+
+
+    if (
+        value.includes("kick")
+    ) {
+
         return "kick";
+
     }
 
 
-    if (value.includes("discord")) {
+    if (
+        value.includes("discord")
+    ) {
+
         return "discord";
+
     }
 
 
-    if (value.includes("twitch")) {
+    if (
+        value.includes("twitch")
+    ) {
+
         return "twitch";
+
     }
 
 
-    if (value.includes("instagram")) {
+    if (
+        value.includes("instagram")
+    ) {
+
         return "instagram";
+
     }
 
 
-    if (value.includes("tiktok")) {
+    if (
+        value.includes("tiktok")
+    ) {
+
         return "tiktok";
+
     }
 
 
     if (
         value === "x" ||
-        value.includes(" twitter")
+        value.startsWith("x ") ||
+        value.includes(" twitter") ||
+        value.includes("twitter")
     ) {
 
         return "x";
@@ -326,9 +557,59 @@ function getIconClass(title) {
     }
 
 
-    return "x";
+    return "generic";
 
 }
+
+
+/* =========================================================
+   ÍCONE AUTOMÁTICO
+========================================================= */
+
+function getAutomaticIcon(title) {
+
+    const iconClass =
+        getIconClass(title);
+
+
+    const colors = {
+
+        kick:
+            "https://cdn.simpleicons.org/kick/FFFFFF",
+
+        discord:
+            "https://cdn.simpleicons.org/discord/FFFFFF",
+
+        twitch:
+            "https://cdn.simpleicons.org/twitch/FFFFFF",
+
+        instagram:
+            "https://cdn.simpleicons.org/instagram/FFFFFF",
+
+        tiktok:
+            "https://cdn.simpleicons.org/tiktok/FFFFFF",
+
+        x:
+            "https://cdn.simpleicons.org/x/FFFFFF"
+
+    };
+
+
+    return {
+
+        icon:
+            colors[iconClass] || "",
+
+        iconClass
+
+    };
+
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
 
 function renderAvatar() {
 
@@ -336,153 +617,239 @@ function renderAvatar() {
         String(data.avatar || "").trim();
 
 
-    if (avatar) {
-
-        avatarImage.src = avatar;
-
-        avatarEl.classList.add("has-image");
-
-    }
-    else {
+    if (!avatar) {
 
         avatarImage.removeAttribute("src");
 
-        avatarEl.classList.remove("has-image");
+        avatarEl.classList.remove(
+            "has-image"
+        );
 
-        avatarPlaceholder.textContent = "♡";
+        avatarPlaceholder.textContent =
+            "♡";
+
+        return;
 
     }
 
+
+    avatarImage.src =
+        normalizeUrl(avatar);
+
+    avatarEl.classList.add(
+        "has-image"
+    );
+
+
+    avatarImage.onerror = () => {
+
+        avatarImage.removeAttribute(
+            "src"
+        );
+
+        avatarEl.classList.remove(
+            "has-image"
+        );
+
+        avatarPlaceholder.textContent =
+            "♡";
+
+    };
+
 }
 
-function render() {
 
-    nameEl.textContent =
-        data.name || "@Yas";
+/* =========================================================
+   RENDERIZAR REDES SOCIAIS
+========================================================= */
 
+function renderSocials() {
 
-    bioEl.textContent =
-        data.bio || "";
+    const socials =
+        Array.isArray(data.socials)
+            ? data.socials
+            : [];
 
-
-    renderAvatar();
 
     socialsEl.innerHTML =
-        data.socials
-            .map(social => `
+        socials
+            .map(social => {
 
-                <a
-                    class="social-link"
-                    href="${escapeHtml(
-                        normalizeUrl(social.url)
-                    )}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="${escapeHtml(social.label)}"
-                    aria-label="${escapeHtml(social.label)}"
-                >
+                const label =
+                    String(
+                        social.label ||
+                        "Rede social"
+                    );
 
-                    ${socialIcon(social.type)}
 
-                </a>
-
-            `)
-            .join("");
-
-    linksEl.innerHTML =
-
-        data.links
-            .map((link, index) => `
-
-                <article
-                    class="link-card"
-                    data-index="${index}"
-                >
-
-                    <div
-                        class="link-icon ${escapeHtml(
-                            link.iconClass || "x"
-                        )}"
-                    >
-
-                        ${
-                            link.icon
-                                ?
-                                `
-                                    <img
-                                        src="${escapeHtml(link.icon)}"
-                                        alt=""
-                                        loading="lazy"
-                                        onerror="
-                                            this.style.display='none';
-                                            this.nextElementSibling.style.display='block';
-                                        "
-                                    >
-
-                                    <span
-                                        class="icon-fallback"
-                                        style="display:none;"
-                                    >
-                                        ↗
-                                    </span>
-                                `
-                                :
-                                `
-                                    <span class="icon-fallback">
-                                        ↗
-                                    </span>
-                                `
-                        }
-
-                    </div>
-
+                return `
 
                     <a
-                        class="link-info"
+                        class="social-link"
                         href="${escapeHtml(
-                            normalizeUrl(link.url)
+                            normalizeUrl(social.url)
                         )}"
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label="${escapeHtml(link.title)}"
+                        title="${escapeHtml(label)}"
+                        aria-label="${escapeHtml(label)}"
                     >
 
-                        <span class="link-title">
-                            ${escapeHtml(link.title)}
-                        </span>
-
-
-                        ${
-                            link.subtitle
-                                ?
-                                `
-                                    <span class="link-subtitle">
-                                        ${escapeHtml(link.subtitle)}
-                                    </span>
-                                `
-                                :
-                                ""
-                        }
+                        ${socialIcon(social.type)}
 
                     </a>
 
+                `;
 
-                    <button
-                        class="dots"
-                        type="button"
-                        data-edit-index="${index}"
-                        aria-label="Editar ${escapeHtml(link.title)}"
-                        title="Editar link"
-                    >
-                        ⋮
-                    </button>
-
-                </article>
-
-            `)
+            })
             .join("");
 
+}
+
+
+/* =========================================================
+   RENDERIZAR LINKS
+========================================================= */
+
+function renderLinks() {
+
+    const links =
+        Array.isArray(data.links)
+            ? data.links
+            : [];
+
+
+    linksEl.innerHTML =
+
+        links
+            .map((link, index) => {
+
+                const title =
+                    String(
+                        link.title ||
+                        "Novo link"
+                    );
+
+
+                const subtitle =
+                    String(
+                        link.subtitle ||
+                        ""
+                    );
+
+
+                const iconClass =
+                    getIconClass(title);
+
+
+                const icon =
+                    String(
+                        link.icon ||
+                        ""
+                    );
+
+
+                return `
+
+                    <article
+                        class="link-card"
+                        data-index="${index}"
+                    >
+
+                        <div
+                            class="link-icon ${escapeHtml(
+                                iconClass
+                            )}"
+                        >
+
+                            ${
+                                icon
+                                    ?
+                                    `
+                                        <img
+                                            src="${escapeHtml(
+                                                normalizeUrl(icon)
+                                            )}"
+                                            alt=""
+                                            loading="lazy"
+                                            onerror="
+                                                this.style.display='none';
+                                                this.nextElementSibling.style.display='block';
+                                            "
+                                        >
+
+                                        <span
+                                            class="icon-fallback"
+                                            style="display:none;"
+                                            aria-hidden="true"
+                                        >
+                                            ↗
+                                        </span>
+                                    `
+                                    :
+                                    `
+                                        <span
+                                            class="icon-fallback"
+                                            aria-hidden="true"
+                                        >
+                                            ↗
+                                        </span>
+                                    `
+                            }
+
+                        </div>
+
+
+                        <a
+                            class="link-info"
+                            href="${escapeHtml(
+                                normalizeUrl(link.url)
+                            )}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="${escapeHtml(title)}"
+                        >
+
+                            <span class="link-title">
+                                ${escapeHtml(title)}
+                            </span>
+
+
+                            ${
+                                subtitle
+                                    ?
+                                    `
+                                        <span class="link-subtitle">
+                                            ${escapeHtml(subtitle)}
+                                        </span>
+                                    `
+                                    :
+                                    ""
+                            }
+
+                        </a>
+
+
+                        <button
+                            class="dots"
+                            type="button"
+                            data-edit-index="${index}"
+                            aria-label="Editar ${escapeHtml(title)}"
+                            title="Editar link"
+                        >
+                            ⋮
+                        </button>
+
+                    </article>
+
+                `;
+
+            })
+            .join("");
+
+
     linksEl.insertAdjacentHTML(
+
         "beforeend",
 
         `
@@ -494,7 +861,9 @@ function render() {
                 + Adicionar novo link
             </button>
         `
+
     );
+
 
     document
         .querySelectorAll("[data-edit-index]")
@@ -525,12 +894,40 @@ function render() {
 
     document
         .getElementById("addLinkBtn")
-        .addEventListener(
+        ?.addEventListener(
             "click",
             addNewLink
         );
 
 }
+
+
+/* =========================================================
+   RENDER GERAL
+========================================================= */
+
+function render() {
+
+    nameEl.textContent =
+        data.name || "@Yas";
+
+
+    bioEl.textContent =
+        data.bio || "";
+
+
+    renderAvatar();
+
+    renderSocials();
+
+    renderLinks();
+
+}
+
+
+/* =========================================================
+   EDITAR PERFIL
+========================================================= */
 
 function openProfileEditor() {
 
@@ -602,6 +999,11 @@ function openProfileEditor() {
 
 }
 
+
+/* =========================================================
+   EDITAR LINK
+========================================================= */
+
 function openLinkEditor(index) {
 
     editingProfile = false;
@@ -614,7 +1016,13 @@ function openLinkEditor(index) {
 
 
     if (!link) {
+
+        showToast(
+            "Esse link não existe mais."
+        );
+
         return;
+
     }
 
 
@@ -703,20 +1111,32 @@ function openLinkEditor(index) {
 }
 
 
+/* =========================================================
+   ADICIONAR NOVO LINK
+========================================================= */
+
 function addNewLink() {
+
+    const automatic =
+        getAutomaticIcon("Novo link");
+
 
     data.links.push({
 
-        title: "Novo link",
+        title:
+            "Novo link",
 
-        subtitle: "",
+        subtitle:
+            "",
 
-        url: "https://",
+        url:
+            "https://",
 
         icon:
-            "https://cdn.simpleicons.org/link/FFFFFF",
+            automatic.icon,
 
-        iconClass: "x"
+        iconClass:
+            automatic.iconClass
 
     });
 
@@ -734,10 +1154,19 @@ function addNewLink() {
 
 }
 
+
+/* =========================================================
+   EXCLUIR LINK
+========================================================= */
+
 function deleteCurrentLink() {
 
-    if (editingIndex === null) {
+    if (
+        editingIndex === null
+    ) {
+
         return;
+
     }
 
 
@@ -746,7 +1175,9 @@ function deleteCurrentLink() {
 
 
     if (!link) {
+
         return;
+
     }
 
 
@@ -757,7 +1188,9 @@ function deleteCurrentLink() {
 
 
     if (!confirmed) {
+
         return;
+
     }
 
 
@@ -773,10 +1206,16 @@ function deleteCurrentLink() {
 
     render();
 
-    showToast("Link excluído");
+    showToast(
+        "Link excluído"
+    );
 
 }
 
+
+/* =========================================================
+   BOTÃO EXCLUIR
+========================================================= */
 
 function addDeleteButton() {
 
@@ -789,14 +1228,24 @@ function addDeleteButton() {
         );
 
 
+    if (!actions) {
+        return;
+    }
+
+
     const deleteButton =
-        document.createElement("button");
+        document.createElement(
+            "button"
+        );
 
 
-    deleteButton.type = "button";
+    deleteButton.type =
+        "button";
+
 
     deleteButton.className =
         "btn danger";
+
 
     deleteButton.textContent =
         "Excluir";
@@ -808,7 +1257,9 @@ function addDeleteButton() {
     );
 
 
-    actions.prepend(deleteButton);
+    actions.prepend(
+        deleteButton
+    );
 
 }
 
@@ -823,9 +1274,20 @@ function removeDeleteButton() {
 
 }
 
+
+/* =========================================================
+   MODAL
+========================================================= */
+
 function openModal() {
 
-    modalBackdrop.classList.add("open");
+    modalBackdrop.classList.add(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
 
 
     setTimeout(() => {
@@ -841,17 +1303,30 @@ function openModal() {
 
 function closeModal() {
 
-    modalBackdrop.classList.remove("open");
+    modalBackdrop.classList.remove(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "";
 
 
     removeDeleteButton();
 
 
-    editingIndex = null;
+    editingIndex =
+        null;
 
-    editingProfile = false;
+    editingProfile =
+        false;
 
 }
+
+
+/* =========================================================
+   SALVAR ALTERAÇÕES
+========================================================= */
 
 function saveChanges() {
 
@@ -865,6 +1340,17 @@ function saveChanges() {
 
         const avatarInput =
             document.getElementById("fAvatar");
+
+
+        if (
+            !nameInput ||
+            !bioInput ||
+            !avatarInput
+        ) {
+
+            return;
+
+        }
 
 
         data.name =
@@ -881,14 +1367,19 @@ function saveChanges() {
 
     }
 
-    else if (editingIndex !== null) {
+
+    else if (
+        editingIndex !== null
+    ) {
 
         const link =
             data.links[editingIndex];
 
 
         if (!link) {
+
             return;
+
         }
 
 
@@ -903,6 +1394,18 @@ function saveChanges() {
 
         const iconInput =
             document.getElementById("fIcon");
+
+
+        if (
+            !titleInput ||
+            !subtitleInput ||
+            !urlInput ||
+            !iconInput
+        ) {
+
+            return;
+
+        }
 
 
         link.title =
@@ -929,6 +1432,29 @@ function saveChanges() {
                 link.title
             );
 
+
+        /*
+            Se o campo de ícone ficar vazio,
+            tenta colocar automaticamente
+            o ícone correspondente ao título.
+        */
+
+        if (!link.icon) {
+
+            const automatic =
+                getAutomaticIcon(
+                    link.title
+                );
+
+
+            link.icon =
+                automatic.icon;
+
+            link.iconClass =
+                automatic.iconClass;
+
+        }
+
     }
 
 
@@ -944,9 +1470,14 @@ function saveChanges() {
 
 }
 
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
 document
     .getElementById("editProfileBtn")
-    .addEventListener(
+    ?.addEventListener(
         "click",
         openProfileEditor
     );
@@ -954,7 +1485,7 @@ document
 
 document
     .getElementById("cancelBtn")
-    .addEventListener(
+    ?.addEventListener(
         "click",
         closeModal
     );
@@ -962,7 +1493,7 @@ document
 
 document
     .getElementById("closeModalBtn")
-    .addEventListener(
+    ?.addEventListener(
         "click",
         closeModal
     );
@@ -970,11 +1501,15 @@ document
 
 document
     .getElementById("saveBtn")
-    .addEventListener(
+    ?.addEventListener(
         "click",
         saveChanges
     );
 
+
+/* =========================================================
+   FECHAR MODAL CLICANDO FORA
+========================================================= */
 
 modalBackdrop.addEventListener(
     "click",
@@ -993,13 +1528,19 @@ modalBackdrop.addEventListener(
 );
 
 
+/* =========================================================
+   ESC FECHA MODAL
+========================================================= */
+
 document.addEventListener(
     "keydown",
     event => {
 
         if (
             event.key === "Escape" &&
-            modalBackdrop.classList.contains("open")
+            modalBackdrop.classList.contains(
+                "open"
+            )
         ) {
 
             closeModal();
@@ -1009,19 +1550,25 @@ document.addEventListener(
     }
 );
 
+
+/* =========================================================
+   COMPARTILHAR
+========================================================= */
+
 document
     .getElementById("shareBtn")
-    .addEventListener(
+    ?.addEventListener(
         "click",
         async () => {
 
             const shareData = {
 
                 title:
-                    data.name,
+                    data.name || "Yas | Links",
 
                 text:
-                    data.bio,
+                    data.bio ||
+                    "Me encontre nas minhas redes sociais",
 
                 url:
                     window.location.href
@@ -1031,7 +1578,10 @@ document
 
             try {
 
-                if (navigator.share) {
+                if (
+                    typeof navigator.share ===
+                    "function"
+                ) {
 
                     await navigator.share(
                         shareData
@@ -1041,7 +1591,12 @@ document
 
                 }
 
-                if (navigator.clipboard) {
+
+                if (
+                    navigator.clipboard &&
+                    typeof navigator.clipboard.writeText ===
+                    "function"
+                ) {
 
                     await navigator
                         .clipboard
@@ -1072,6 +1627,19 @@ document
                     window.location.href;
 
 
+                textarea.setAttribute(
+                    "readonly",
+                    ""
+                );
+
+
+                textarea.style.position =
+                    "fixed";
+
+                textarea.style.opacity =
+                    "0";
+
+
                 document.body.appendChild(
                     textarea
                 );
@@ -1080,31 +1648,66 @@ document
                 textarea.select();
 
 
-                document.execCommand(
-                    "copy"
-                );
+                const copied =
+                    document.execCommand(
+                        "copy"
+                    );
 
 
                 textarea.remove();
 
 
-                showToast(
-                    "Link copiado!"
-                );
+                if (copied) {
+
+                    showToast(
+                        "Link copiado!"
+                    );
+
+                }
+                else {
+
+                    showToast(
+                        "Não foi possível copiar."
+                    );
+
+                }
 
             }
 
 
             catch (error) {
 
-                console.warn(
-                    "Compartilhamento cancelado.",
-                    error
-                );
+                /*
+                    Se o usuário simplesmente cancelar
+                    o compartilhamento, não mostramos
+                    uma mensagem de erro.
+                */
+
+                if (
+                    error?.name !==
+                    "AbortError"
+                ) {
+
+                    console.warn(
+                        "Erro ao compartilhar.",
+                        error
+                    );
+
+                    showToast(
+                        "Não foi possível compartilhar."
+                    );
+
+                }
 
             }
 
         }
     );
 
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
 render();
+```
