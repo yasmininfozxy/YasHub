@@ -37,12 +37,12 @@ const defaultData = {
 
     links: [
 
-        {
-            title: "YouTube",
+         {
+            title: "Kick",
             subtitle: "",
-            url: "https://www.youtube.com/",
-            icon: "https://cdn.simpleicons.org/youtube/FFFFFF",
-            iconClass: "youtube"
+            url: "https://kick.com/",
+            icon: "https://cdn.simpleicons.org/kick/FFFFFF",
+            iconClass: "kick"
         },
 
 
