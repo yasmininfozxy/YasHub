@@ -37,7 +37,7 @@ const defaultData = {
         {
             title: "Discord",
             subtitle: "Servidor • Free to join",
-            url: "https://discord.com/",
+            url: "https://discord.gg/X2xsD5tjM",
             icon: "https://cdn.simpleicons.org/discord/FFFFFF",
             iconClass: "discord"
         },
@@ -72,7 +72,7 @@ const defaultData = {
         {
             title: "X",
             subtitle: "",
-            url: "https://x.com/",
+            url: "https://x.com/osenhormacaco?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcATzT6NwZG9mAmV4dG4DYWVtAjExAHNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABpxMk9qqPnKxf5EG2ahCpLxGTYCNjqf1RGptuvl04U4NRuMf88KQC2MsRX3Mr_aem_q6TPup9Uct8tj9QmQceJig2",
             icon: "https://cdn.simpleicons.org/x/FFFFFF",
             iconClass: "x"
         }
