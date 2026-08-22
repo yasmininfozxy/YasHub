@@ -7,7 +7,7 @@ const defaultData = {
         {
             type: "instagram",
             label: "Instagram",
-            url: "https://www.instagram.com/"
+            url: "https://www.instagram.com/_.yasminzxy?igsi=MWR2MjZkcTZrdnhzNQ=="
         },
         {
             type: "twitch",
