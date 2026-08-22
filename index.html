@@ -1,21 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-<head>```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Yas | Links</title>
-
-    <meta
-        name="description"
-        content="Encontre todos os meus links e redes sociais em um só lugar."
-    >
-
+    <meta name="description" content="Encontre todos os meus links e redes sociais em um só lugar.">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -24,346 +14,73 @@
     <main class="page">
 
         <header class="topbar">
-
-            <div class="brand" aria-label="Logo">
-                ♡
-            </div>
+            <div class="brand" aria-label="Logo">♡</div>
 
             <div class="topbar-actions">
-
-                <button
-                    class="icon-button"
-                    id="editProfileBtn"
-                    type="button"
-                    aria-label="Editar perfil"
-                    title="Editar perfil"
-                >
+                <button class="icon-button" id="editProfileBtn" type="button" aria-label="Editar perfil" title="Editar perfil">
                     ✎
                 </button>
 
-                <button
-                    class="icon-button"
-                    id="shareBtn"
-                    type="button"
-                    aria-label="Compartilhar página"
-                    title="Compartilhar"
-                >
+                <button class="icon-button" id="shareBtn" type="button" aria-label="Compartilhar página" title="Compartilhar">
                     ↗
                 </button>
-
             </div>
-
         </header>
-
 
         <section class="profile">
 
             <div class="avatar">
-
-                <img
-                    id="avatarImage"
-                    src=""
-                    alt="Foto do perfil"
-                >
-
-                <div
-                    class="avatar-placeholder"
-                    id="avatarPlaceholder"
-                    aria-hidden="true"
-                >
-                    ♡
-                </div>
-
+                <img id="avatarImage" src="" alt="Foto do perfil">
+                <div class="avatar-placeholder" id="avatarPlaceholder">♡</div>
             </div>
 
+            <h1 id="profileName">@Yas</h1>
 
-            <h1 id="profileName">
-                @Yas
-            </h1>
-
-
-            <p
-                class="profile-bio"
-                id="profileBio"
-            >
+            <p class="profile-bio" id="profileBio">
                 Me encontre nas minhas redes sociais
             </p>
 
-
-            <nav
-                class="socials"
-                id="socials"
-                aria-label="Redes sociais"
-            ></nav>
+            <nav class="socials" id="socials" aria-label="Redes sociais"></nav>
 
         </section>
 
-
-        <section
-            class="links"
-            id="links"
-            aria-label="Meus links"
-        ></section>
-
+        <section class="links" id="links" aria-label="Meus links"></section>
 
         <footer class="footer">
-
-            Feito com
-            <span aria-hidden="true">♥</span>
-            por <strong>Yas</strong>
-
+            Feito com <span>♥</span> por <strong>Yas</strong>
         </footer>
 
     </main>
 
+    <div class="modal-backdrop" id="modalBackdrop">
 
-    <!-- MODAL -->
-
-    <div
-        class="modal-backdrop"
-        id="modalBackdrop"
-    >
-
-        <div
-            class="modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modalTitle"
-        >
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
 
             <div class="modal-header">
+                <h2 id="modalTitle">Editar perfil</h2>
 
-                <h2 id="modalTitle">
-                    Editar perfil
-                </h2>
-
-                <button
-                    class="modal-close"
-                    id="closeModalBtn"
-                    type="button"
-                    aria-label="Fechar"
-                    title="Fechar"
-                >
+                <button class="modal-close" id="closeModalBtn" type="button" aria-label="Fechar">
                     ×
                 </button>
-
             </div>
-
 
             <div id="modalContent"></div>
 
-
             <div class="modal-actions">
-
-                <button
-                    class="btn secondary"
-                    id="cancelBtn"
-                    type="button"
-                >
+                <button class="btn secondary" id="cancelBtn" type="button">
                     Cancelar
                 </button>
 
-                <button
-                    class="btn primary"
-                    id="saveBtn"
-                    type="button"
-                >
+                <button class="btn primary" id="saveBtn" type="button">
                     Salvar
                 </button>
-
             </div>
 
         </div>
 
     </div>
 
-
-    <!-- TOAST -->
-
-    <div
-        class="toast"
-        id="toast"
-        role="status"
-        aria-live="polite"
-    ></div>
-
-
-    <script src="script.js"></script>
-
-</body>
-
-</html>
-```
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Yas | Links</title>
-
-    <meta
-        name="description"
-        content="Encontre todos os meus links e redes sociais em um só lugar."
-    >
-
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-    <main class="page">
-
-        <header class="topbar">
-
-            <div class="brand" aria-label="Logo">
-                ♡
-            </div>
-
-            <div class="topbar-actions">
-
-                <button
-                    class="icon-button"
-                    id="editProfileBtn"
-                    type="button"
-                    aria-label="Editar perfil"
-                    title="Editar perfil"
-                >
-                    ✎
-                </button>
-
-                <button
-                    class="icon-button"
-                    id="shareBtn"
-                    type="button"
-                    aria-label="Compartilhar página"
-                    title="Compartilhar"
-                >
-                    ↗
-                </button>
-
-            </div>
-
-        </header>
-
-        <section class="profile">
-
-            <div class="avatar">
-
-                <img
-                    id="avatarImage"
-                    src=""
-                    alt="Foto do perfil"
-                >
-
-                <div
-                    class="avatar-placeholder"
-                    id="avatarPlaceholder"
-                >
-                    ♡
-                </div>
-
-            </div>
-
-
-            <h1 id="profileName">
-                @Yas
-            </h1>
-
-
-            <p
-                class="profile-bio"
-                id="profileBio"
-            >
-                Me encontre nas minhas redes sociais
-            </p>
-
-
-            <nav
-                class="socials"
-                id="socials"
-                aria-label="Redes sociais"
-            ></nav>
-
-        </section>
-
-        <section
-            class="links"
-            id="links"
-            aria-label="Meus links"
-        ></section>
-
-
-        <footer class="footer">
-            Feito com
-            <span>♥</span>
-            por <strong>Yas</strong>
-        </footer>
-
-    </main>
-
-    <div
-        class="modal-backdrop"
-        id="modalBackdrop"
-    >
-
-        <div
-            class="modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modalTitle"
-        >
-
-            <div class="modal-header">
-
-                <h2 id="modalTitle">
-                    Editar perfil
-                </h2>
-
-                <button
-                    class="modal-close"
-                    id="closeModalBtn"
-                    type="button"
-                    aria-label="Fechar"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <div id="modalContent"></div>
-
-
-            <div class="modal-actions">
-
-                <button
-                    class="btn secondary"
-                    id="cancelBtn"
-                    type="button"
-                >
-                    Cancelar
-                </button>
-
-                <button
-                    class="btn primary"
-                    id="saveBtn"
-                    type="button"
-                >
-                    Salvar
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <div
-        class="toast"
-        id="toast"
-        role="status"
-        aria-live="polite"
-    ></div>
-
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="script.js"></script>
 
