@@ -314,7 +314,7 @@ h1 {
 /* Cores dos cartões de ícones */
 
 .link-icon.kick {
-    background: #53FC19;
+    background: #f99aaa;
 }
 
 .link-icon.discord {
@@ -723,7 +723,6 @@ h1 {
 
     .link-card {
         min-height: 76px;
-
         padding-right: 54px;
     }
 
@@ -731,11 +730,8 @@ h1 {
     .link-icon {
         width: 54px;
         height: 54px;
-
         flex-basis: 54px;
-
         margin-right: 11px;
-
         padding: 10px;
     }
 
